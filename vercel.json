@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/resources/views(.*)",
-      "dest": "/"
+      "dest": "/resources/views"
     }
   ]
 }
