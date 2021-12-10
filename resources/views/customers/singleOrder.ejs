@@ -1,0 +1,186 @@
+<div class="status-wrapper pb-10 sm:py-15 lg:pb-8 bg-secondary">
+  <div class="container mx-auto px-4">
+    <div class="boxshadow-none">
+      <div class="breadcrumbs py-2">
+        <div class="inline-block">
+          <a
+            href="/"
+            class="
+              text-sm
+              inline-block
+              align-middle
+              breadcrumbs-title
+              hover:text-primary
+            "
+            >Home</a
+          >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            class="h-3 w-5 align-middle inline-block"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </div>
+        <div class="inline-block">
+          <a
+            href="/customer/orders"
+            class="
+              text-sm
+              inline-block
+              align-middle
+              breadcrumbs-title
+              hover:text-primary
+            "
+            >My Orders</a
+          >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            class="h-3 w-3 align-middle inline-block"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </div>
+        <div class="inline-block">
+          <p class="text-sm breadcrumbs-title uppercase"><%=orders._id %></p>
+        </div>
+      </div>
+      <div class="delivery-details order-details bg-white mb-4 mt-2">
+        <div class="md:w-3/6 py-4 px-3 xl:py-6 xl:px-6 w-11/12">
+          <div class="inline-block">
+            <div class="delivery-address font-semibold mb-4">
+              <span>Delivery Address</span>
+            </div>
+            <div class="delivery-name font-semibold text-sm mb-2">
+              <span class="customer-billing-name"
+                ><%=orders.address.firstName %> <%=orders.address.lastName
+                %></span
+              >
+            </div>
+            <div class="delivery-address text-sm mb-2">
+              <span class="customer-billing-address"
+                ><%=orders.address.street_address%><%
+                if(orders.address.landmark){ %>, near
+                <%=orders.address.landmark%> <% } %> -
+                <%=orders.address.pincode%>
+              </span>
+            </div>
+            <div class="delivery-phone text-sm mb-2">
+              <span class="font-semibold customer-phoneno">Phone number:</span>
+              <span class="ml-1"><%=orders.address.phone%> </span>
+            </div>
+            <div class="delivery-payement text-sm">
+              <span class="font-semibold customer-payment">Payment Type:</span>
+              <span class="ml-1 uppercase"><%=orders.paymentType%> </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="order-details bg-white">
+        <div class="py-3 px-3 xl:py-4 xl:px-6 sm:w-3/6 w-11/12">
+          <div class="order-content mb-3">
+            <div class="mb-2">
+              <div class="mb-2 sm:mb-0">
+                <p class="text-sm font-semibold order-number">Order Number</p>
+                <p
+                  class="
+                    text-sm text-primary
+                    font
+                    uppercase
+                    order-id
+                    inline-block
+                  "
+                >
+                  <%=orders._id %>
+                </p>
+              </div>
+            </div>
+            <div class="pt-2">
+              <div>
+                <div class="mb-1 md:w-5/6 lg:w-3/6">
+                  <%for(let items of Object.values(orders.items)){%>
+                  <div class="flex mb-3">
+                    <img
+                      src="/img/<%=items.item.image %>"
+                      alt="pizza"
+                      class="h-10"
+                    />
+                    <div class="item-info ml-3 w-full">
+                      <div class="flex items-center">
+                        <span
+                          class="text-sm text-gray-600 mr-1.5 font-semibold"
+                        >
+                          <%=items.item.name%>
+                        </span>
+                        -
+                        <span class="text-xs mt-0.5 ml-1.5 pizza-size uppercase"
+                          ><%=items.item.size%></span
+                        >
+                      </div>
+
+                      <div class="flex justify-between items-center">
+                        <span class="text-sm">Qty: <%=items.qty%></span>
+
+                        <span class="text-sm"
+                          >₹ <%=items.item.price* items.qty%></span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+                  <div class="flex">
+                    <div class="w52"></div>
+                    <div class="flex justify-between w-full mt-2">
+                      <span class="text-sm font-semibold total-amount"
+                        >Total Amount</span
+                      >
+                      <span class="text-sm">
+                        <% var total = 0; %> <%for(let items of
+                        Object.values(orders.items)){%>₹ <%=total+=
+                        items.item.price* items.qty %> <% } %></span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="go-back text-center mt-5">
+        <a
+          href="/customer/orders"
+          class="
+            inline-block
+            px-6
+            bg-primary
+            py-2
+            rounded
+            transition
+            duration-300
+            ease-in-out
+            hover:bg-primaryHover
+            text-white
+            shadow
+          "
+          >Go back
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

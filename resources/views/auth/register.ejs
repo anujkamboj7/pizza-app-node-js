@@ -1,0 +1,374 @@
+<!-- register section -->
+<div class="signup bg-secondary">
+  <div class="container px-4 mx-auto">
+    <div class="fit-to-screen py-6 flex flex-col items-center justify-center">
+      <div
+        class="
+          flex flex-col
+          bg-white
+          shadow-md
+          px-4
+          sm:px-6
+          md:px-8
+          lg:px-10
+          py-8
+          w-full
+          max-w-md
+        "
+      >
+        <div
+          class="
+            font-medium
+            self-center
+            text-lg
+            lg:text-xl
+            uppercase
+            text-gray-800
+            mb-2
+          "
+        >
+          Sign up to create account
+        </div>
+        <button
+          class="
+            relative
+            mt-6
+            py-2
+            border border-facebook
+            text-sm
+            bg-facebook
+            text-white
+          "
+          onclick="window.location.href='/auth/facebook'"
+        >
+          <span
+            class="
+              absolute
+              left-0
+              top-0
+              flex
+              items-center
+              justify-center
+              h-full
+              w-10
+              text-white
+            "
+            ><img src="/img/facebook-app-symbol.svg" alt="" class="w-4"
+          /></span>
+          <span>Sign up with Facebook</span>
+        </button>
+
+        <button
+          class="
+            relative
+            mt-3
+            border border-gray-500
+            py-2
+            text-sm
+            bg-white
+            text-gray
+            hover:bg-gray-50
+          "
+          onclick="window.location.href='/auth/google'"
+        >
+          <span
+            class="
+              absolute
+              left-0
+              top-0
+              flex
+              items-center
+              justify-center
+              h-full
+              w-10
+            "
+            ><img src="/img/search.svg" alt="" class="w-4"
+          /></span>
+          <span>Sign up with Google</span>
+        </button>
+
+        <div class="relative mt-10 h-px bg-gray-300">
+          <div class="absolute left-0 top-0 flex justify-center w-full -mt-2">
+            <span class="bg-white px-4 text-xs text-gray-500 uppercase"
+              >Or Sign up With Email</span
+            >
+          </div>
+        </div>
+        <div class="mt-10">
+          <form action="/register" method="POST" autocomplete="off">
+            <%if(messages.error) {%>
+            <span class="block p-2 text-red-500 text-sm mb-2 bg-red-100"
+              ><%=messages.error %>
+            </span>
+            <%} %>
+            <!-- <div class="flex flex-col mb-6">
+              <label
+                for="email"
+                class="mb-1 text-sm sm:text-sm tracking-wide text-gray-600"
+                >Name:</label
+              >
+              <div class="relative">
+                <div
+                  class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400"
+                >
+                  <svg
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+
+                <input
+                  id="username"
+                  type="text"
+                  name="name"
+                  class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 border border-gray-400 w-full py-2 focus:outline-none focus:border-gray-800 placeholder-opacity-75"
+                  placeholder="Name"
+                  required
+                />
+              </div>
+            </div> -->
+            <div class="flex flex-col mb-6">
+              <label
+                for="email"
+                class="mb-1 text-sm sm:text-sm tracking-wide text-gray-600"
+                >Email Address:</label
+              >
+              <div class="relative">
+                <div
+                  class="
+                    inline-flex
+                    items-center
+                    justify-center
+                    absolute
+                    left-0
+                    top-0
+                    h-full
+                    w-10
+                    text-gray-400
+                  "
+                >
+                  <svg
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+
+                <input
+                  id="email"
+                  name="email"
+                  class="
+                    text-sm
+                    sm:text-base
+                    placeholder-gray-500
+                    pl-10
+                    pr-4
+                    border border-gray-400
+                    w-full
+                    py-2
+                    focus:outline-none focus:border-gray-800
+                    placeholder-opacity-75
+                  "
+                  placeholder="Email"
+                  required
+                />
+              </div>
+            </div>
+            <div class="flex flex-col mb-6" x-data="{ show: true }">
+              <label
+                for="password"
+                class="mb-1 text-sm sm:text-sm tracking-wide text-gray-600"
+                >Password:</label
+              >
+              <div class="relative">
+                <div
+                  class="
+                    inline-flex
+                    items-center
+                    justify-center
+                    absolute
+                    left-0
+                    top-0
+                    h-full
+                    w-10
+                    text-gray-400
+                  "
+                >
+                  <span>
+                    <svg
+                      class="h-6 w-6"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                      />
+                    </svg>
+                  </span>
+                </div>
+
+                <div
+                  class="
+                    inline-flex
+                    items-center
+                    justify-center
+                    absolute
+                    right-0
+                    top-0
+                    h-full
+                    w-10
+                    text-gray-400
+                    focus:outline-none
+                  "
+                >
+                  <span>
+                    <svg
+                      class="h-6 w-6 cursor-pointer"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      @click="show = !show"
+                      :class="{'hidden': !show, 'block':show }"
+                    >
+                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                      <path
+                        fill-rule="evenodd"
+                        d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <svg
+                      class="h-6 w-6 cursor-pointer"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      @click="show = !show"
+                      :class="{'block': !show, 'hidden':show }"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z"
+                        clip-rule="evenodd"
+                      />
+                      <path
+                        d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z"
+                      />
+                    </svg>
+                  </span>
+                </div>
+
+                <input
+                  id="password"
+                  :type="show ? 'password' : 'text'"
+                  name="password"
+                  class="
+                    text-sm
+                    sm:text-base
+                    placeholder-gray-500
+                    pl-10
+                    pr-4
+                    border border-gray-400
+                    w-full
+                    py-2
+                    focus:outline-none focus:border-gray-800
+                    placeholder-opacity-75
+                    focus:ring-0
+                  "
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              
+              <span class="block p-2 text-gray-500 text-sm mt-2">
+                <p class class="text-md px-1 pass-error text-sm">
+                  Required minimum 8 character
+              </br>
+                   Require at least one letter 
+                </br>
+                Required one number and
+                  one special character.
+                </p>
+              </span>
+            
+            </div>
+
+            <div class="flex w-full">
+              <button
+                type="submit"
+                class="
+                  flex
+                  items-center
+                  justify-center
+                  focus:outline-none
+                  text-white text-sm
+                  sm:text-base
+                  bg-primary
+                  hover:bg-primaryHover
+                  py-2.5
+                  w-full
+                  transition
+                  duration-300
+                  ease-in-out
+                "
+              >
+                <span class="mr-2 text-md uppercase">Signup</span>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="flex justify-center items-center mt-6">
+          <a
+            href="/login"
+            class="
+              inline-flex
+              items-center
+              font-bold
+              text-gray-500
+              hover:text-gray-800
+              text-sm text-center
+            "
+          >
+            <!-- <span>
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                />
+              </svg>
+            </span> -->
+            <span class="ml-2">Login to Your Account</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- register section ends -->

@@ -1,0 +1,560 @@
+<!-- cart section -->
+<div class="empty-cart">
+  <% if(session.cart) { %> <% if(!user){ %>
+  <div class="py-10 bg-secondary height-fix">
+    <% } else{ %>
+    <div class="py-10 lg:py-12 bg-secondary">
+      <% } %>
+      <div class="container px-4 mx-auto md:w-3/4 lg:w-3/4">
+        <div class="flex items-center border-b border-gray-300 pb-4">
+          <img
+            src="/img/shopping-cart-black.svg"
+            alt="shopping-cart"
+            class="w-10 lg:w-12"
+          />
+          <h1 class="font-bold text-lg lg:text-xl ml-2 lg:ml-5">
+            Order Summary
+          </h1>
+        </div>
+        <% for(let pizza of Object.values(session.cart.items)) {%>
+        <div class="pizza-list">
+          <div class="flex items-end justify-between mt-10 menu-item">
+            <div class="sm:flex flex-1 items-center w-3/6">
+              <img
+                src="/img/<%=pizza.item.image %>"
+                alt=""
+                class="w-14 lg:w-20 pb-2"
+              />
+              <div class="sm:ml-6">
+                <h1 class="font-bold"><%=pizza.item.name %></h1>
+                <span class="uppercase text-sm"><%=pizza.item.size %></span>
+                <span class="block text-primary"><%=pizza.qty %> Pcs</span>
+              </div>
+            </div>
+
+            <div class="text-right flex-1 w-3/6">
+              <span class="font-bold inline-block text-lg mb-2 item-price"
+                >₹<%=pizza.item.price * pizza.qty%>
+              </span>
+              <div class="quantity items-end p-0 flex justify-end">
+                <button type="button" class="quantity__minus">
+                  <span class="minus-icon"
+                    ><img src="/img/minus.svg" alt="minus"
+                  /></span>
+                </button>
+                <input
+                  name="quantity"
+                  type="text"
+                  class="quantity__input border-gray-400"
+                  value="<%=pizza.qty %>"
+                  readonly
+                  style="pointer-events: none"
+                />
+                <button class="quantity__plus" type="button">
+                  <span><img src="/img/plus.svg" alt="plus" /></span>
+                </button>
+              </div>
+              <div class="remove-item">
+                <form action="/cart/remove-item" method="POST">
+                  <input type="hidden" name="id" value="<%=pizza.item._id %>" />
+                  <button
+                    type="submit"
+                    class="
+                      empty-cart-icon
+                      text-gray-500
+                      font-semibold
+                      text-sm
+                      uppercase
+                    "
+                  >
+                    Remove
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } %> <% if(!user){ %>
+        <div class="text-right mt-4">
+          <a
+            href="/login"
+            class="
+              inline-block
+              bg-primary
+              py-2.5
+              px-6
+              mt-8
+              rounded-full
+              transition
+              duration-300
+              ease-in-out
+              text-white
+              hover:bg-primaryHover
+            "
+          >
+            Login to continue
+          </a>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <% if(user){ %>
+    <div class="bg-white">
+      <div class="container px-4 mx-auto md:w-3/4 lg:w-3/4">
+        <div class="py-10 lg:pt-14 lg:pb-20">
+          <div>
+            <form action="/orders" method="POST" id="payment-form">
+              <div class="lg:flex block">
+                <div class="billing-address ml-auto">
+                  <div>
+                    <div class="pb-4">
+                      <span
+                        class="
+                          mr-6
+                          text-lg
+                          inline-block
+                          font-semibold
+                          info-title
+                        "
+                        >Billing Addresses</span
+                      >
+                    </div>
+                    <div>
+                      <div class="block sm:flex">
+                        <div class="form-group mb-4 w-half">
+                          <div class="pb-2">
+                            <span class="text-gray-600 label-heading"
+                              >First Name</span
+                            >
+                          </div>
+                          <input
+                            name="firstname"
+                            class="
+                              rounded-sm
+                              border
+                              p-3
+                              form-control
+                              input-blocked
+                              border-gray-300
+                              text-sm
+                              h-12
+                              focus:border focus:border-gray-800
+                              w-full
+                              focus:outline-none
+                              focus:ring-0
+                            "
+                            type="text"
+                            placeholder="Firstname"
+                            required
+                          />
+                        </div>
+                        <div class="form-group mb-4 w-half sm:ml-2.5">
+                          <div class="pb-2">
+                            <span class="text-gray-600 label-heading"
+                              >Last Name</span
+                            >
+                          </div>
+                          <input
+                            name="lastname"
+                            class="
+                              rounded-sm
+                              border
+                              p-3
+                              form-control
+                              input-blocked
+                              border-gray-300
+                              text-sm
+                              h-12
+                              focus:border focus:border-gray-800
+                              w-full
+                              focus:outline-none
+                              focus:ring-0
+                            "
+                            type="text"
+                            placeholder="Lastname"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="form-group mb-4">
+                        <div class="pb-2">
+                          <span class="text-gray-600 label-heading"
+                            >Phone Number</span
+                          >
+                        </div>
+                        <input
+                          name="phone"
+                          class="
+                            rounded-sm
+                            border
+                            p-3
+                            form-control
+                            input-blocked
+                            border-gray-300
+                            text-sm
+                            h-12
+                            focus:border focus:border-gray-800
+                            w-full
+                            focus:outline-none
+                            focus:ring-0
+                          "
+                          type="text"
+                          placeholder="Phone number"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div class="form-group mb-4">
+                        <div class="pb-2">
+                          <span class="text-gray-600 label-heading"
+                            >Street Address</span
+                          >
+                        </div>
+                        <input
+                          name="address"
+                          class="
+                            rounded-sm
+                            border
+                            p-3
+                            form-control
+                            input-blocked
+                            border-gray-300
+                            text-sm
+                            h-12
+                            focus:border focus:border-gray-800
+                            w-full
+                            focus:outline-none
+                            focus:ring-0
+                          "
+                          type="text"
+                          placeholder="Address"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="block sm:flex">
+                      <div class="form-group mb-4 w-half">
+                        <div class="pb-2">
+                          <span class="text-gray-600 label-heading"
+                            >Landmark</span
+                          >
+                        </div>
+                        <input
+                          name="landmark"
+                          class="
+                            rounded-sm
+                            border
+                            p-3
+                            form-control
+                            input-blocked
+                            border-gray-300
+                            text-sm
+                            h-12
+                            focus:border focus:border-gray-800
+                            w-full
+                            focus:outline-none
+                            focus:ring-0
+                          "
+                          type="text"
+                          placeholder="Landmark"
+                        />
+                      </div>
+                      <div class="form-group mb-4 w-half sm:ml-2.5">
+                        <div class="pb-2">
+                          <span class="text-gray-600 label-heading"
+                            >Pincode</span
+                          >
+                        </div>
+                        <input
+                          name="pincode"
+                          class="
+                            rounded-sm
+                            border
+                            p-3
+                            form-control
+                            input-blocked
+                            border-gray-300
+                            text-sm
+                            h-12
+                            focus:border focus:border-gray-800
+                            w-full
+                            focus:outline-none
+                            focus:ring-0
+                          "
+                          type="text"
+                          placeholder="Pincode"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="relative payment-mode lg:pl-12 xl:pl-12 pl-0 mt-5">
+                  <div class="text-left">
+                    <h2 class="mb-4 text-md font-semibold info-title">
+                      Select Payment Mode
+                    </h2>
+                  </div>
+                  <div class="grid grid-cols-1 gap-y-6 payment-block">
+                    <label class="inline-flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        class="
+                          form-radio
+                          h-4
+                          w-4
+                          text-primary
+                          focus:ring-0
+                          cursor-pointer
+                        "
+                        name="paymentType"
+                        id="cod"
+                        value="cod"
+                        checked
+                      /><span class="ml-2 text-gray-700 text-sm font-semibold"
+                        >Cash on Delivery
+                      </span>
+                      <span class="ml-1 text-xs"> - Working</span>
+                    </label>
+                    <label class="inline-flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        class="
+                          form-radio
+                          h-4
+                          w-4
+                          text-primary
+                          focus:ring-0
+                          cursor-pointer
+                        "
+                        name="paymentType"
+                        id="stripe"
+                        value="stripe"
+                      />
+                      <span
+                        class="
+                          ml-2
+                          text-gray-700
+                          flex
+                          items-center
+                          text-sm
+                          font-semibold
+                        "
+                        ><img
+                          src="/img/stripe-4.svg"
+                          alt=""
+                          class="w-12 mr-1.5"
+                        />Stripe</span
+                      >
+                      <span class="ml-1 text-xs"> - Working</span>
+                    </label>
+                    <label class="inline-flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        class="
+                          form-radio
+                          h-4
+                          w-4
+                          text-primary
+                          focus:ring-0
+                          cursor-pointer
+                        "
+                        name="paymentType"
+                        id="razorpay"
+                        value="razorpay"
+                      /><span
+                        class="
+                          ml-2
+                          text-gray-700
+                          flex
+                          items-center
+                          text-sm
+                          font-semibold
+                        "
+                        ><img
+                          src="/img/razorpay.svg"
+                          alt=""
+                          class="w-24 mr-1.5"
+                      /></span>
+                      <span class="ml-1 text-xs"> </span>
+                    </label>
+                    <label class="inline-flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        class="
+                          form-radio
+                          h-4
+                          w-4
+                          text-primary
+                          focus:ring-0
+                          cursor-pointer
+                        "
+                        name="paymentType"
+                        id="paytm"
+                        value="paytm"
+                      /><span
+                        class="
+                          ml-2
+                          text-gray-700
+                          flex
+                          items-center
+                          text-sm
+                          font-semibold
+                        "
+                        ><img
+                          src="/img/paytm.svg"
+                          alt=""
+                          class="w-12 mr-1.5"
+                        />Paytm Wallet</span
+                      >
+                    </label>
+                    <label class="inline-flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        class="
+                          form-radio
+                          h-4
+                          w-4
+                          text-primary
+                          focus:ring-0
+                          cursor-pointer
+                        "
+                        name="paymentType"
+                        id="gPay"
+                        value="gPay"
+                      />
+                      <span
+                        class="
+                          ml-2
+                          text-gray-700
+                          flex
+                          items-center
+                          text-sm
+                          font-semibold
+                        "
+                        ><img
+                          src="/img/google-pay-primary-logo.svg"
+                          alt=""
+                          class="w-10 mr-1.5"
+                        />Google Pay</span
+                      >
+                    </label>
+
+                    <label class="inline-flex items-center cursor-pointer">
+                      <input
+                        type="radio"
+                        class="
+                          form-radio
+                          h-4
+                          w-4
+                          text-primary
+                          focus:ring-0
+                          cursor-pointer
+                        "
+                        name="paymentType"
+                        id="amazonPay"
+                        value="amazonPay"
+                      />
+                      <span
+                        class="
+                          ml-2
+                          text-gray-700
+                          flex
+                          items-center
+                          text-sm
+                          font-semibold
+                        "
+                        ><img
+                          src="/img/amazon-pay-brands.svg"
+                          alt=""
+                          class="w-8 mr-1.5"
+                        />Amazon Pay</span
+                      >
+                    </label>
+                  </div>
+                  <div id="card-element"></div>
+                  <div class="pt-8 md:pt-8">
+                    <span class="text-lg font-bold">Total Amount:</span>
+                    <span class="amount text-lg text-primary font-semibold ml-2"
+                      >₹<%= session.cart.totalPrice %>
+                    </span>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="
+                      py-2.5
+                      mt-4
+                      px-6
+                      text-sm
+                      bg-primary
+                      text-white
+                      uppercase
+                      font-semibold
+                      transition
+                      duration-300
+                      ease-in-out
+                      hover:bg-primaryHover
+                      rounded-full
+                    "
+                  >
+                    <div class="flex items-center">
+                      Place Order
+                      <img
+                        src="/img/arrow-narrow-right.svg"
+                        alt="go"
+                        class="ml-2.5"
+                      />
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% } else{ %>
+    <div class="py-10 sm:py-15 lg:py-10 bg-secondary height-fix">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-3xl font-bold mb-4">Cart Empty</h1>
+        <p class="text-gray-500 lg:text-lg mb-12">
+          You probably haven't ordered a pizza yet.<br />To order a pizza, go to
+          the main page.
+        </p>
+        <img
+          src="/img/empty-cart.png"
+          alt=""
+          class="w-4/5 sm:w-2/5 mx-auto mb-12"
+        />
+        <a
+          href="/"
+          class="
+            inline-block
+            px-8
+            bg-primary
+            py-3
+            rounded-full
+            transition
+            duration-300
+            ease-in-out
+            hover:bg-primaryHover
+            text-white
+            shadow
+          "
+        >
+          <div class="flex items-center">Go Back</div>
+        </a>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- cart section ends -->
+  </div>
+</div>
